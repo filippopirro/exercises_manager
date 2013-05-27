@@ -56,7 +56,7 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public User selectById(User user) throws Exception {
-		Select select = new Select(user.getClass(), user.getClass().getSimpleName() + "_v", "id", user.getId());
+		Select select = new Select(user.getClass(), user.getClass().getSimpleName().toLowerCase() + "_v", "id", user.getId());
 		logger.info(select.getSqlStatement());
 		select.execute(dataSource.getConnection());
 		User userResult = (User) select.getFirstRow();
@@ -64,7 +64,7 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	public User selectByCredentials(User user) throws Exception {
-		Select select = new Select(user.getClass(), user.getClass().getSimpleName() + "_v", "username",
+		Select select = new Select(user.getClass(), user.getClass().getSimpleName().toLowerCase() + "_v", "username",
 				user.getUsername(), "password", user.getPassword());
 		logger.info(select.getSqlStatement());
 		select.execute(dataSource.getConnection());
@@ -79,9 +79,9 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public void deleteById(User user) throws Exception {
-		Set setClause = new Set("flg_active", "N");
+		Set setClause = new Set("active", "N");
 		Where whereClause = new Where("id", user.getId());
-		Update dml = new Update(User.class.getSimpleName(), setClause, whereClause);
+		Update dml = new Update(User.class.getSimpleName().toLowerCase(), setClause, whereClause);
 		logger.info(dml.getSqlStatement());
 		dml.execute(dataSource.getConnection());
 	}

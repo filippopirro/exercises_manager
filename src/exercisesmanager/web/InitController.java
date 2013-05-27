@@ -53,6 +53,9 @@ public class InitController {
 				|| (locale.getLanguage().equals("hu"))) {
 			if (locale.getLanguage().equals("hu")) {
 				locale = new Locale.Builder().setLanguage("hu_HU").build();
+			} else {
+				String language = locale.getLanguage();
+				locale = new Locale.Builder().setLanguage(language).build();
 			}
 		} else {
 			locale = Locale.ENGLISH;
