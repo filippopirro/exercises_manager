@@ -1,0 +1,19 @@
+launcher
+	|
+	+-	Main
+	|	|
+	|	+- Project		=	exercises_manager
+	|	|
+	|	+- Main class	=	org.apache.catalina.startup.Bootstrap
+	|
+	+-	Arguments
+	|	|
+	|	+- Program arguments	=	-config "C:/work/workspace/exercises_manager/conf/server.xml" start
+	|	|
+	|	+- VM arguments			=	-Dcatalina.home="C:/Program Files/Apache/Apache_Tomcat/apache-tomcat-6.0.33"
+	|								-Dcatalina.base="C:/Program Files/Apache/Apache_Tomcat/apache-tomcat-6.0.33"
+	|								-Djava.endorsed.dirs="C:/Program Files/Apache/Apache_Tomcat/apache-tomcat-6.0.33/common/endorsed"
+	|
+	+-	JRE
+		|
+		+- Runtime JRE	=	<jdk1.7.0_11>

@@ -1,0 +1,25 @@
+.readOnlyInput {
+	background: #F0F0F0;
+}
+
+.spring_input {
+    font-size: 10pt;
+    font-style: bold;
+	text-align:	left;
+	margin:0px;
+}
+
+.spring_error {
+	color: #A4AB89;
+    font-size: 10pt;
+	background-color: #4D5C35;
+    font-style: italic;
+}
+
+.spring_errorblock {
+	color: #000;
+	background-color: #FFEEEE;
+	border: 3px solid #FF0000;
+	padding:8px;
+	margin:16px;
+}
