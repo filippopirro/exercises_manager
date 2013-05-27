@@ -39,8 +39,8 @@
 			<div>
 				<p>
 					<span style="font-size: 12pt;font-style: bold;"></span><br/>
-					${dataCart.message}
-				</p>
+					      ${dataCart.message}
+				 </p>
 				<p>
 					<span style="font-size: 12pt;font-style: bold;"></span><br/>
 				</p>
