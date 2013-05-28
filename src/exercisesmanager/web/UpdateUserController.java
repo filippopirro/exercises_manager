@@ -16,6 +16,7 @@ import pif.system.session.DataCart;
 import exercisesmanager.dao.UserDao;
 import exercisesmanager.dao.implementors.UserDaoImpl;
 import exercisesmanager.pojos.User;
+import exercisesmanager.validators.UpdateUserValidator;
 
 @Controller
 @RequestMapping("updateuser.htm")
@@ -35,16 +36,24 @@ public class UpdateUserController {
 	@RequestMapping(method = RequestMethod.POST)
 	public String onSubmit(@ModelAttribute(value = "user") User user, BindingResult result, final ModelMap model,
 			HttpSession session) {
-		UserDao userDao = new UserDaoImpl();
-		try {
-			user.setId((Integer) DataCart.getUserId(session));
-			user.setPassword(DataCart.getUserPassword(session));
-			userDao.updateById(user);
-		} catch (Exception e) {
-			logger.error(e);
+		UpdateUserValidator updateUserValidator = new UpdateUserValidator();
+		updateUserValidator.validate(user, result);
+		String returnPage = "";
+		if (result.hasErrors()) {
+			returnPage = "updateuser";
+		} else {
+			UserDao userDao = new UserDaoImpl();
+			try {
+				user.setId((Integer) DataCart.getUserId(session));
+				user.setPassword(DataCart.getUserPassword(session));
+				userDao.updateById(user);
+			} catch (Exception e) {
+				logger.error(e);
+			}
+			returnPage = "redirect:confirm.htm";
 		}
 		DataCart.setValue(session, "message", "User has been updated");
-		return "redirect:confirm.htm";
+		return returnPage;
 	}
 
 }

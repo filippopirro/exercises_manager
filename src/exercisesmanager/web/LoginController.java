@@ -16,6 +16,7 @@ import pif.system.session.DataCart;
 import exercisesmanager.dao.UserDao;
 import exercisesmanager.dao.implementors.UserDaoImpl;
 import exercisesmanager.pojos.User;
+import exercisesmanager.validators.LoginValidator;
 
 @Controller
 @RequestMapping("login.htm")
@@ -27,27 +28,35 @@ public class LoginController {
 	public String get(final ModelMap model, HttpSession session) {
 		User user = new User();
 		model.addAttribute("user", user);
-		model.addAttribute(DataCart.DATACART,DataCart.getDataCart(session));
+		model.addAttribute(DataCart.DATACART, DataCart.getDataCart(session));
 		return "login";
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
 	public String onSubmit(@ModelAttribute(value = "user") User user, BindingResult result, final ModelMap model,
 			HttpSession session) {
-		UserDao userDao = new UserDaoImpl();
-		try {
-			User returnedUser = userDao.selectByCredentials(user);
-			if (returnedUser != null) {
-				logger.info("User logged in as " + user.getUsername());
-				setUserParams(session, returnedUser);
-			} else {
-				logger.info("Failed to log in as " + user.getUsername());
+		LoginValidator loginValidator = new LoginValidator();
+		loginValidator.validate(user, result);
+		String returnPage = "";
+		if (result.hasErrors()) {
+			returnPage = "login";
+		} else {
+			UserDao userDao = new UserDaoImpl();
+			try {
+				User returnedUser = userDao.selectByCredentials(user);
+				if (returnedUser != null) {
+					logger.info("User logged in as " + user.getUsername());
+					setUserParams(session, returnedUser);
+				} else {
+					logger.info("Failed to log in as " + user.getUsername());
+				}
+			} catch (Exception e) {
+				logger.error(e);
 			}
-		} catch (Exception e) {
-			logger.error(e);
+			returnPage = "redirect:main.htm";
 		}
-		model.addAttribute(DataCart.DATACART,DataCart.getDataCart(session));
-		return "redirect:main.htm";
+		model.addAttribute(DataCart.DATACART, DataCart.getDataCart(session));
+		return returnPage;
 	}
 
 	private void setUserParams(HttpSession session, User returnedUser) {
