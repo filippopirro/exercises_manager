@@ -8,11 +8,9 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
-import pif.utils.string.Regex;
 
 import exercisesmanager.dao.implementors.UserDaoImpl;
 
-import exercisesmanager.pojos.RegisterUser;
 import exercisesmanager.pojos.User;
 
 public class LoginValidator implements Validator {
