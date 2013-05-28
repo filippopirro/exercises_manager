@@ -1,5 +1,3 @@
-/*ciao*/
-
 package exercisesmanager.web;
 
 import javax.servlet.http.HttpSession;

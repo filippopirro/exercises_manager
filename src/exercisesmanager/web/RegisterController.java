@@ -52,6 +52,7 @@ public class RegisterController {
 			DataCart.setValue(session, "message", "User has been registered");
 			exitPage="redirect:confirm.htm";
 		}
+		model.addAttribute(DataCart.DATACART, DataCart.getDataCart(session));
 		return exitPage;
 	}
 

@@ -43,27 +43,33 @@
 						<form:label path="username" cssClass="spring_input">
 							<spring:message code="label.user.username"/>
 						</form:label></br>
-						<form:input path="username"/></br></br>
+						<form:input path="username"/></br>
+						<form:errors path="username" cssClass="spring_error"/></br>
 						<form:label path="password" cssClass="spring_input">
 							<spring:message code="label.user.password"/>
 						</form:label></br>
-						<form:password path="password"/></br></br>
+						<form:password path="password"/></br>
+						<form:errors path="password" cssClass="spring_error"/></br>
 						<form:label path="confirmPassword" cssClass="spring_input">
 							<spring:message code="label.user.confirmPassword"/>
 						</form:label></br>
-						<form:password path="confirmPassword"/></br></br>
+						<form:password path="confirmPassword"/></br>
+						<form:errors path="confirmPassword" cssClass="spring_error"/></br>
 						<form:label path="first_name" cssClass="spring_input">
 							<spring:message code="label.user.first_name"/>
 						</form:label></br>
-						<form:input path="first_name"/></br></br>
+						<form:input path="first_name"/></br>
+						<form:errors path="first_name" cssClass="spring_error"/></br>
 						<form:label path="last_name" cssClass="spring_input">
 							<spring:message code="label.user.last_name"/>
 						</form:label></br>
-						<form:input path="last_name"/></br></br>
+						<form:input path="last_name"/></br>
+						<form:errors path="last_name" cssClass="spring_error"/></br>
 						<form:label path="email" cssClass="spring_input">
 							<spring:message code="label.user.email"/>
 						</form:label></br>
-						<form:input path="email"/></br></br>
+						<form:input path="email"/></br>
+						<form:errors path="email" cssClass="spring_error"/></br></br>
 						<input type="submit" value="<spring:message code="input.submit.save"/>" class="button"/>
 					</form:form>
 				</p>

@@ -8,6 +8,8 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
+import pif.utils.string.Regex;
+
 import exercisesmanager.dao.implementors.UserDaoImpl;
 
 import exercisesmanager.pojos.RegisterUser;
@@ -21,7 +23,7 @@ public class RegisterValidator implements Validator {
 	public boolean supports(Class<?> clazz) {
 		return RegisterUser.class.equals(clazz);
 	}
-
+	
 	@Override
 	public void validate(Object object, Errors errors) {
 		RegisterUser user = (RegisterUser) object;
@@ -37,11 +39,13 @@ public class RegisterValidator implements Validator {
 		if (!user.getPassword().equals(user.getConfirmPassword())) {
 			errors.rejectValue("confirmPassword", "error.form.user.confirmPassword.match");
 		}
-		if ((user.getFirst_name().length() < 5) || (user.getFirst_name().length() > 20)) {
+		user.setFirst_name(Regex.trimSpaces(user.getFirst_name()));
+		if (user.getFirst_name().length() > 20) {
 			errors.rejectValue("first_name", "error.form.user.firstName.length");
 		}
+		user.setLast_name(Regex.trimSpaces(user.getLast_name()));
 		checkRegex(errors, "first_name", user.getFirst_name(), "[^a-zA-Z_\\'_\\u0020]", "error.form.user.firstName.regex");
-		if ((user.getLast_name().length() < 5) || (user.getLast_name().length() > 20)) {
+		if (user.getLast_name().length() > 20) {
 			errors.rejectValue("last_name", "error.form.user.lastName.length");
 		}
 		checkRegex(errors, "last_name", user.getLast_name(), "[^a-zA-Z_\\'_\\u0020]", "error.form.user.lastName.regex");
