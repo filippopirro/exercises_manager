@@ -17,6 +17,7 @@ import exercisesmanager.dao.UserDao;
 import exercisesmanager.dao.implementors.UserDaoImpl;
 import exercisesmanager.pojos.RegisterUser;
 import exercisesmanager.pojos.User;
+import exercisesmanager.validators.RegisterValidator;
 
 @Controller
 @RequestMapping("register.htm")
@@ -34,15 +35,24 @@ public class RegisterController {
 	@RequestMapping(method = RequestMethod.POST)
 	public String onSubmit(@ModelAttribute(value = "registerUser") RegisterUser registerUser, BindingResult result,
 			final ModelMap model, HttpSession session) {
-		UserDao userDao = new UserDaoImpl();
-		try {
-			User user = new User(registerUser);
-			userDao.insert(user);
-		} catch (Exception e) {
-			logger.error(e);
+		RegisterValidator validator = new RegisterValidator();
+		validator.validate(registerUser, result);
+		String exitPage="";
+		if (result.hasErrors()){
+			model.addAttribute("registerUser",registerUser);
+			exitPage="register";
+		} else {
+			UserDao userDao = new UserDaoImpl();
+			try {
+				User user = new User(registerUser);
+				userDao.insert(user);
+			} catch (Exception e) {
+				logger.error(e);
+			}
+			DataCart.setValue(session, "message", "User has been registered");
+			exitPage="redirect:confirm.htm";
 		}
-		DataCart.setValue(session, "message", "User has been registered");
-		return "redirect:confirm.htm";
+		return exitPage;
 	}
 
 }

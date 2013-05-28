@@ -63,6 +63,16 @@ public class UserDaoImpl implements UserDao {
 		return userResult;
 	}
 
+	public User selectByUsername(String username) throws Exception {
+		Select select = new Select("*", "", "user");
+		Where whereClause = new Where("username", username);
+		select.setWhereClause(whereClause);
+		logger.info(select.getSqlStatement());
+		select.execute(dataSource.getConnection());
+		User userResult = (User) select.getFirstRow();
+		return userResult;
+	}
+
 	public User selectByCredentials(User user) throws Exception {
 		Select select = new Select(user.getClass(), user.getClass().getSimpleName().toLowerCase() + "_v", "username",
 				user.getUsername(), "password", user.getPassword());
