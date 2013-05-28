@@ -44,7 +44,7 @@
 		<property name="password" value="appuserpwd"/>
 		-->
 		<property name="username" value="root"/>
-		<property name="password" value="r4ff4l3l3"/>
+		<property name="password" value="rootpwd"/>
 		<property name="maxActive" value="20"/>
 		<property name="maxIdle" value="5"/>
 		<property name="minIdle" value="1"/>

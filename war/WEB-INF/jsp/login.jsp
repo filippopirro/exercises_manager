@@ -44,10 +44,12 @@
 							<spring:message code="label.user.username"/>
 						</form:label></br>
 						<form:input path="username"/></br>
+						<form:errors path="username" cssClass="spring_error"/></br>
 						<form:label path="password" cssClass="spring_input">
 							<spring:message code="label.user.password"/>
 						</form:label></br>
-						<form:password path="password"/></br></br>
+						<form:password path="password"/></br>
+						<form:errors path="password" cssClass="spring_error"/></br></br>
 						<input type="submit" value="<spring:message code="input.submit.login"/>" class="button"/>
 					</form:form>
 				</p>
