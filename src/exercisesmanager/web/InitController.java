@@ -48,11 +48,11 @@ public class InitController {
 	
 	private Locale getLocale(HttpServletRequest request) {
 		Locale locale = request.getLocale();
-		if ((locale.getLanguage().equals(Locale.ENGLISH.toString()))
-				|| (locale.getLanguage().equals(Locale.ITALIAN.toString()))
-				|| (locale.getLanguage().equals("hu"))) {
-			if (locale.getLanguage().equals("hu")) {
-				locale = new Locale.Builder().setLanguage("hu_HU").build();
+		if ((locale.getLanguage().startsWith(Locale.ENGLISH.toString()))
+				|| (locale.getLanguage().startsWith(Locale.ITALIAN.toString()))
+				|| (locale.getLanguage().startsWith("hu"))) {
+			if (locale.getLanguage().startsWith("hu")) {
+				locale = new Locale.Builder().setLanguage("hu").build();
 			} else {
 				String language = locale.getLanguage();
 				locale = new Locale.Builder().setLanguage(language).build();
