@@ -5,11 +5,12 @@ import java.util.regex.Pattern;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
 
-import exercisesmanager.dao.implementors.UserDaoImpl;
+import exercisesmanager.dao.UserDao;
 
 import exercisesmanager.pojos.User;
 
@@ -17,6 +18,13 @@ public class LoginValidator implements Validator {
 
 	protected final Log logger = LogFactory.getLog(getClass());
 
+	@Autowired
+	private UserDao userDao=null;
+	
+	private UserDao getUserDao() {
+		return userDao;
+	}
+	
 	@Override
 	public boolean supports(Class<?> clazz) {
 		return User.class.equals(clazz);
@@ -31,9 +39,9 @@ public class LoginValidator implements Validator {
 	}
 
 	private void checkCredentials(Errors errors, User user) {
-		UserDaoImpl userDaoImpl = new UserDaoImpl();
+		UserDao userDao = getUserDao();
 		try {
-			User returnedUser = (User) userDaoImpl.selectByCredentials(user);
+			User returnedUser = (User) userDao.selectByCredentials(user);
 			if (returnedUser == null) {
 				errors.rejectValue("password", "error.form.user.loginFailed");
 			}

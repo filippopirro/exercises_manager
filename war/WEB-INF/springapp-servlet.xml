@@ -28,6 +28,7 @@
 	</bean>
 
 	<!-- Imports user-defined @Controller beans that process client requests -->
+	<context:component-scan base-package="exercisesmanager.validators"/>
 	<context:component-scan base-package="exercisesmanager.web"/>
 	<context:component-scan base-package="exercisesmanager.pojos"/>
 
@@ -44,7 +45,7 @@
 		<property name="password" value="appuserpwd"/>
 		-->
 		<property name="username" value="root"/>
-		<property name="password" value="rootpwd"/>
+		<property name="password" value="r4ff4l3l3"/>
 		<property name="maxActive" value="20"/>
 		<property name="maxIdle" value="5"/>
 		<property name="minIdle" value="1"/>
@@ -61,7 +62,9 @@
 	
 	<!-- Bean -->
 	
-	<bean id="userDao" class="exercisesmanager.dao.implementors.UserDaoImpl" scope="singleton"/>
+	<bean id="userDao" class="exercisesmanager.dao.implementors.JdbcUserDao" scope="singleton">
+		<property name="dataSource" ref="dataSource"/>
+	</bean>
 
 	<bean id="user" class="exercisesmanager.pojos.User" scope="session"/>
 

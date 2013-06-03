@@ -4,6 +4,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -14,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import pif.system.session.DataCart;
 
 import exercisesmanager.dao.UserDao;
-import exercisesmanager.dao.implementors.UserDaoImpl;
 import exercisesmanager.pojos.User;
 import exercisesmanager.validators.LoginValidator;
 
@@ -23,7 +23,14 @@ import exercisesmanager.validators.LoginValidator;
 public class LoginController {
 
 	protected final Log logger = LogFactory.getLog(getClass());
-
+	
+	@Autowired
+	private UserDao userDao=null;
+	
+	private UserDao getUserDao(){
+		return userDao;
+	}
+	
 	@RequestMapping(method = RequestMethod.GET)
 	public String get(final ModelMap model, HttpSession session) {
 		User user = new User();
@@ -41,7 +48,7 @@ public class LoginController {
 		if (result.hasErrors()) {
 			returnPage = "login";
 		} else {
-			UserDao userDao = new UserDaoImpl();
+			UserDao userDao = getUserDao();
 			try {
 				User returnedUser = userDao.selectByCredentials(user);
 				if (returnedUser != null) {

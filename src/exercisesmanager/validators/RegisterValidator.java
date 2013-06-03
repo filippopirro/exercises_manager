@@ -5,13 +5,13 @@ import java.util.regex.Pattern;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
 import pif.utils.string.Regex;
 
-import exercisesmanager.dao.implementors.UserDaoImpl;
-
+import exercisesmanager.dao.UserDao;
 import exercisesmanager.pojos.RegisterUser;
 import exercisesmanager.pojos.User;
 
@@ -19,6 +19,13 @@ public class RegisterValidator implements Validator {
 
 	protected final Log logger = LogFactory.getLog(getClass());
 
+	@Autowired
+	private UserDao userDao=null;
+	
+	private UserDao getUserDao() {
+		return userDao;
+	}
+	
 	@Override
 	public boolean supports(Class<?> clazz) {
 		return RegisterUser.class.equals(clazz);
@@ -55,9 +62,9 @@ public class RegisterValidator implements Validator {
 	}
 
 	private void checkIfUsernameAlreadyPresent(Errors errors, String username) {
-		UserDaoImpl userDaoImpl = new UserDaoImpl();
+		UserDao userDao = getUserDao();
 		try {
-			User user = (User) userDaoImpl.selectByUsername(username);
+			User user = (User) userDao.selectByUsername(username);
 			if (user == null) {
 				errors.rejectValue("username", "error.form.user.username.alreadyPresent");
 			}

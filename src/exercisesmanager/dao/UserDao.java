@@ -12,6 +12,8 @@ public interface UserDao {
 
 	public User selectById(User user) throws Exception;
 
+	public User selectByUsername(String username) throws Exception;
+	
 	public User selectByCredentials(User user) throws Exception;
 
 	public void deleteById(Integer id) throws Exception;
